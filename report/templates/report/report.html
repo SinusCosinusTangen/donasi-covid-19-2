@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Report Issue</title>
+    </head>
+
+    <body>
+        <form action="" method="POST">
+            <table class="table">
+                <tbody>
+                    {{ form.as_table }}
+                    <tr>
+                        <th></th>
+                        <td>
+                            {% csrf_token %}
+                            <button class="btn btn-outline-primary" type="submit" name="Simpan">Simpan</button>
+                            <a class="btn btn-outline-danger" href="{% url 'report:report'%}" name="Cancel">Batal</a>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </form>
+    </body>
+</html>

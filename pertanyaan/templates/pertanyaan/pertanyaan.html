@@ -1,0 +1,66 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block meta %}
+    <title>Questions</title>
+    <style>
+
+        .row a{
+            margin: 5%;margin-top: 0%; margin-bottom: 0%; color: black; font-size: larger; 
+        }
+        .row a:hover {
+            color: #91B14C;
+            font-weight: bold;
+            text-decoration: none
+        }
+
+        .btn:hover{
+            background-color: #91B14C;
+        }
+
+    </style>
+
+{% endblock meta %}
+
+{% block content %}
+    <div id=>
+        <div class='container text-center' style="margin: 5%;">
+            <div class = "row align-items-center" style="margin-bottom: 5%;">
+                <div class='col-9'>
+                    <h1 style="color: #4B6574; font-weight: bold; ">Question?</h1>
+                </div>
+
+                
+                    
+                
+                <div class="input-group col-md-3">
+                    <form action="" method="get">
+                        <span class="input-group-append">
+                        <input class="form-control py-2" type="search" placeholder="Search..." id="example-search-input" name="search">
+                        
+                            <button type="submit" class="btn btn-outline-secondary" type="button">Search </button>
+                        </span>
+
+                    </form>
+                </div>
+              
+            </div>
+
+            {% if questions %}
+                {% for i in questions %}
+                    <div class="row align-items-center">
+                        <a href="{% url 'pertanyaan:detail' i.pk %}" style="">{{i.question}}</a>
+                        
+                    </div>
+                    <hr style="margin-left: 5%; margin-right: 5%; margin-top: 0;">
+                {% endfor %}
+            
+            {% else %}
+                <div class="row align-items-center justify-content-center" style="margin: 5%;">
+                    <h1>There are no question</h1>
+                </div>
+            {% endif %}
+
+        </div>
+    </div>
+{% endblock content %}

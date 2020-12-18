@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block meta %}
+<title>Hello, world!</title>
+{% endblock meta %}
+
+{% block content %}
+<body>
+  <div class="container mb-5 mt-5">
+    <form method="POST" class = "formulir"> {%csrf_token %}
+        {{form.as_p}}
+        <input type = 'submit' value="SAVE" />
+    </form>
+  </div>
+</body>
+{% endblock content %}
