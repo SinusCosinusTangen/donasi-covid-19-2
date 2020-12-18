@@ -1,8 +1,9 @@
-from django.test import LiveServerTestCase, TestCase, tag
-from django.urls import reverse
+from django.test import LiveServerTestCase, TestCase, tag, Client
+from django.urls import reverse, resolve
 from selenium import webdriver
-
+from .models import Pendonor
 from pertanyaan.models import Question
+from main import views
 
 
 @tag('functional')
@@ -45,3 +46,32 @@ class MainFunctionalTestCase(FunctionalTestCase):
         html = self.selenium.find_element_by_tag_name('html')
         self.assertNotIn('not found', html.text.lower())
         self.assertNotIn('error', html.text.lower())
+
+class DonorTestCase(TestCase):
+    def test_url (self) :
+        response1  = Client().get("/donate/")
+        self.assertEqual(response1.status_code,200)
+
+    def test_template_used(self) :
+        response = Client().get("/donate/")
+        self.assertTemplateUsed(response, "main/donate.html")
+
+    def test_str_equal_to_name(self):
+        Pendonor.objects.create(name="Riris", phone_number="08117777774", amount="500000", method="Transfer Bank", messages="Semangat yah")
+        obj = Pendonor.objects.get(pk=1)
+        self.assertEqual(str(obj), obj.name)
+    
+    def test_donasi(self) :
+        response = self.client.post('/donate/', data={"name":"Riris", "phone_number":"08117777774", "amount":"500000", "method":"Transfer Bank", "messages":"Semangat yah"})
+        self.assertEqual(Pendonor.objects.count(), 1)
+
+    def test_function_views_donate_used(self):
+        function = resolve('/donate/')
+        self.assertEqual(function.func, views.donate)
+   
+    def test_model_used_in_donate_html(self):
+        Pendonor.objects.create(name="Riris", phone_number="08117777774", amount="500000", method="Transfer Bank", messages="Semangat yah")
+        count_the_message = Pendonor.objects.all().count()
+        self.assertEquals(count_the_message, 1)
+
+    

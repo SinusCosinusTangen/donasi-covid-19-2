@@ -13,9 +13,9 @@ class FormPendonor(forms.ModelForm):
         ]
 
         widgets = {
-            'name': forms.TextInput(attrs={'class': 'form-control'}),
-            'phone_number': forms.TextInput(attrs={'class': 'form-control'}),
-            'amount': forms.TextInput(attrs={'class': 'form-control'}),
-            'method': forms.Select(attrs={'class': 'form-control'}),
-            'messages': forms.Textarea(attrs={'class': 'form-control'})
+            'name': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Name'}),
+            'phone_number': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Phone Number'}),
+            'amount': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Amount'}),
+            'method': forms.Select(attrs={'class': 'form-control', 'placeholder': 'Method'}),
+            'messages': forms.Textarea(attrs={'class': 'form-control', 'placeholder': 'Messages'})
         }

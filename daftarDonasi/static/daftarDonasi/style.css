@@ -1,5 +1,46 @@
 body {
     background-color: #e4f5e2;
+    padding-bottom: 60px;
+}
+
+/* If the screen size is 601px wide or more, set the font-size of <div> to 80px */
+@media screen and (min-width: 601px) {
+    input::placeholder, th, td {
+        font-size: 15px;
+    }
+}
+  
+  /* If the screen size is 600px wide or less, set the font-size of <div> to 30px */
+@media screen and (max-width: 600px) {
+    input::placeholder, th, td {
+        font-size: 10px;
+    }
+}
+.prev {
+    position: absolute;
+    left: 2.5%;
+}
+
+.next {
+    position: absolute;
+    right: 2.5%;
+}
+
+.num {
+    display: flex;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.py-2 {
+    border-radius: 80px;
+}
+
+.search {
+    margin-left: auto;
+    margin-top: 10px;
+    right: 0;
+    padding: 0;
 }
 
 .tablelist {
@@ -8,7 +49,29 @@ body {
     margin-right: auto;
 }
 
-form {
-    margin-left: auto;
-    margin-right: auto;
+.btn-light{
+    color: black;
+    width: 200px;
+    background-color: #D1F5C5;
+    border-radius: 80px;
+    border: solid;
+    border-width: thin;
+}
+
+.disabled {
+    border: solid;
+    border-width: thin;
+}
+
+.btn:hover {
+    background-color: #91B14C;
+}
+
+.button {
+    max-height: 38px;
+    max-width: 38px;
+    margin-left: 20px;
+    border: solid;
+    border-radius: 30px;
+    border-width: thin;
 }

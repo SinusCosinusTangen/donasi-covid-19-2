@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+{% extends 'base.html' %}
+<html>
+    <head>
+        {% block meta %}
+        <title>Lihat Report</title>
+        {% endblock meta %}
+    </head>
+
+    <body>
+        {% block content %}
+        <table>
+            {% for r in report%}
+            <tr>
+                <td>{{ r.name }}</td>
+                <td>{{ r.description }}</td>
+            </tr>
+            {% endfor %}
+        </table>
+        {% endblock %}
+    </body>
+</html>

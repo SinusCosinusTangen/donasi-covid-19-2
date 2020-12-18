@@ -1,0 +1,27 @@
+{% extends 'base.html' %} {% block content%}
+<h1 style="color: #4B6574; font-weight: bold; padding-left: 10%; padding-top: 5%;">Give Us Testimonial
+</h1>
+<div class="container">
+    <form method="POST">
+        {% csrf_token %}
+        <div class="row">
+            <div class="col-6">
+                <div class="form-group">
+                    <label for="id_nama">Name:*</label> {{testi_form.nama}}
+                </div>
+            </div>
+            <div class="col-6">
+                <div class="form-group">
+                    <label for="id_institusi">Institution:*</label> {{testi_form.institusi}}
+                </div>
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="id_testimoni">Testimonial:</label> {{testi_form.testimoni}}
+        </div>
+
+        <button type="submit" class="btn btn-light">Submit</button>
+        <a href="{% url 'testi:tampilan' %}" style="color: black;"> See All </a>
+    </form>
+</div>
+{% endblock %}

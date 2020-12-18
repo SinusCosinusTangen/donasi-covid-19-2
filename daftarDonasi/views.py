@@ -7,10 +7,18 @@ from main.models import *
 def daftarDonasi(request):
     pendonor = Pendonor.objects.all()
     page = request.GET.get('page', 1)
-    myFilter = DonaturFilter(request.GET, queryset=pendonor)
-    donatur = myFilter.qs
-    paginator = Paginator(donatur, 10)
-
+    search = request.GET.get('search')
+    paginator = Paginator(pendonor, 10)
+    if search:
+        donatur = Pendonor.objects.filter(name__icontains=search)
+        paginator = Paginator(donatur, 10)
+        try:
+            donatur = paginator.page(page)
+        except PageNotAnInteger:
+            donatur = paginator.page(1)
+        except EmptyPage:
+            donatur = paginator.page(paginator.num_pages)
+    
     try:
         donatur = paginator.page(page)
     except PageNotAnInteger:
@@ -18,5 +26,5 @@ def daftarDonasi(request):
     except EmptyPage:
         donatur = paginator.page(paginator.num_pages)
 
-    context = {'donatur':donatur, 'myFilter':myFilter}
+    context = {'donatur':donatur}
     return render(request, 'daftarDonasi/daftarDonasi.html', context)

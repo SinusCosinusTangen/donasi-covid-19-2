@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+{% extends 'base.html' %}
+<html>
+    <head>
+    {% block meta %}
+    <style>
+        .my-custom-scrollbar {
+            position: relative;
+            max-height: 470px;
+            overflow: auto;
+        }
+        .table-wrapper-scroll-y {
+            display: block;
+        }
+        .gambar {
+            width: 10%;
+        }
+    </style>
+    <title>Our Institution</title>
+    {% endblock meta %}
+    </head>
+
+    <body>
+        {% block content %}
+        <div class="container" style="margin: 5%;">
+            <div class="row justify-content-between">
+                <div class="col-5 align-self-start" style="margin-top:10%">
+                    <h1 style="color: #4B6574; font-weight: bold; ">Our Partner<br>Intitutions</h1>
+                </div>
+
+                <div class="table-wrapper-scroll-y my-custom-scrollbar" style="width: 55%;">
+                    <table class="table table-borderless mb-0">
+                        <tbody>
+                            {% for i in institution %}
+                            <tr>
+                                <td class="gambar">
+                                    <img src="{{ i.image.url }}" class="mr-3" alt="{{ i.lembaga }}" width="60">
+                                </td>
+                                <td><h5>{{ i.lembaga }}</h5>
+                                <p>{{ i.description }}<p>
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        {% endblock %}
+    </body>
+</html>

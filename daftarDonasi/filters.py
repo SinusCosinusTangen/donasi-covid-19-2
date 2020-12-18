@@ -1,9 +1,11 @@
 import django_filters
 
 from main.models import *
+from django import forms
 
-class DonaturFilter(django_filters.FilterSet):
-    class Meta:
+class DonaturFilter(forms.ModelForm):
+    class Meta :
         model = Pendonor
-        fields = '__all__'
-        exclude = ['phone_number', 'amount', 'method', 'messages']
+        fields = [
+            'name', "name"
+        ]

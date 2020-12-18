@@ -2,6 +2,7 @@ from django.shortcuts import render, redirect
 from .forms import FormPendonor
 from .models import Pendonor
 from .form import QuestionForm
+from django.contrib import messages
 
 def donate(request):
     form = FormPendonor(request.POST or None)

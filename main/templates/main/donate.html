@@ -2,16 +2,57 @@
 {% load static %}
 
 {% block meta %}
-<title>Hello, world!</title>
+<title>Donate</title>
 {% endblock meta %}
 
 {% block content %}
-<body>
-  <div class="container mb-5 mt-5">
-    <form method="POST" class = "formulir"> {%csrf_token %}
-        {{form.as_p}}
-        <input type = 'submit' value="SAVE" />
-    </form>
+
+  <div class="row justify-content-between">
+      <div class="col-5 align-self-start" style="margin:3%">
+        <h1 style="color: #4B6574; font-weight: bold; ">Donate Now...</h1>
+        <form action="" method="POST">
+            <table class="table">
+                <tbody>
+                    <tr>
+                        <td>
+                            {{ form.name }}
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            {{ form.phone_number }}
+                        </td>
+                    </tr>
+                    <tr>
+                      <td>
+                          {{ form.amount }}
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>
+                          {{ form.method }}
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>
+                          {{ form.messages }}
+                      </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            {% csrf_token %}
+                            <button class="btn btn-light" type="submit" name="Simpan">Submit</button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </form>
+      </div>
+      <div class="col-5 align-self-start" style="margin-top:15% ; margin-right:2%">
+        <h3 style="color: #4B6574; font-weight: bold; ">How to Donate</h3>
+        <p> To donate through our website, simply fill in your identity in the forms available. Fill in the amount of money that you want to donate and choose your prefered payment method. Lastly, you can leave a personal message for those who are going to receive your donation. Click <b>Donate</b> and your donation has been recorded.         </p>
+      </div>
   </div>
-</body>
+  <br>
+</div>
 {% endblock content %}

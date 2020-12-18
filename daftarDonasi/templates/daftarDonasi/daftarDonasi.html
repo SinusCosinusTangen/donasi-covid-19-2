@@ -3,30 +3,24 @@
     {% extends 'base.html' %}
     {% load static %}
     <head>
-        <!-- Required meta tags -->
-        <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-
-        <!-- Bootstrap CSS -->
-        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
-
-        <link rel="stylesheet" href="{% static 'daftarDonasi/style.css' %}"/>
-        <title>Daftar Donasi</title>
+        {% block meta %}
+        <title>Donations</title>
+        <link rel="stylesheet" href="{% static 'daftarDonasi/style.css' %}">
+        {% endblock meta %}
     </head>
 
     <body>
         {% block content %}
-        <div class="row">
-            <div class="col">
-                <div class="card" style="background-color: #e4f5e2;">
-                    <form method="get">
-                        {{ myFilter.form }}
-                        <button class="btn btn-primary" type="submit">Search</button>
-                    </form>
-                </div>
-            </div>
+        <div class="input-group col-md-3 search">
+            <form action="" method="get">
+                <span class="input-group-append">
+                    <input class="form-control py-2" type="search" placeholder="Search..." id="example-search-input" name="search">
+                    <input class="button" type="image" src="{% static 'daftarDonasi/img/search_logo.png' %}" alt="Submit" width="35" height="35">
+                </span>
+
+            </form>
         </div>
-        <table class="table table-bordered tablelist" style="width: 80%; background-color: #FFFFFF;">
+        <table class="table table-bordered tablelist" style="width: 95%; background-color: #FFFFFF;">
             <thead>
                 <tr>
                     <th>Name</th>
@@ -48,27 +42,35 @@
             </tbody>
         </table>
 
-        {% if donatur.has_other_pages %}
-        <ul class="pagination">
-            {% if donatur.has_previous %}
-                <li><a href="?page={{ donatur.previous_page_number }}">&laquo;</a></li>
-            {% else %}
-                <li class="disabled"><span>&laquo;</span></li>
+        <div class="page">
+            {% if donatur.has_other_pages %}
+            <ul class="pagination">
+                <div class="prev">
+                    {% if donatur.has_previous %}
+                        <li><a class="btn btn-light" href="?page={{ donatur.previous_page_number }}">Previous</a></li>
+                    {% else %}
+                        <li class="btn btn-light disabled"><span>Previous</span></li>
+                    {% endif %}
+                </div>
+                <div class="num">
+                    {% for i in donatur.paginator.page_range %}
+                    {% if donatur.number == i %}
+                        <li class="active"><span>{{ i }} <span class="sr-only">(current)</span></span></li>
+                    {% else %}
+                        <li><a href="?page={{ i }}">{{ i }}</a></li>
+                    {% endif %}
+                    {% endfor %}
+                </div>
+                <div class="next">
+                    {% if donatur.has_next %}
+                        <li><a class="btn btn-light" href="?page={{ donatur.next_page_number }}">Next</a></li>
+                    {% else %}
+                        <li class="btn btn-light disabled"><span>Next</span></li>
+                    {% endif %}
+                </div>
+            </ul>
             {% endif %}
-            {% for i in donatur.paginator.page_range %}
-            {% if donatur.number == i %}
-                <li class="active"><span>{{ i }} <span class="sr-only">(current)</span></span></li>
-            {% else %}
-                <li><a href="?page={{ i }}">{{ i }}</a></li>
-            {% endif %}
-            {% endfor %}
-            {% if donatur.has_next %}
-                <li><a href="?page={{ donatur.next_page_number }}">&raquo;</a></li>
-            {% else %}
-                <li class="disabled"><span>&raquo;</span></li>
-            {% endif %}
-        </ul>
-        {% endif %}
+        </div>
         {% endblock %}
 
         <!-- Optional JavaScript -->

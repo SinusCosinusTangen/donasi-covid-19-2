@@ -1,0 +1,41 @@
+h1 {
+    text-align: center;
+}
+
+input, textarea {
+    border-radius: 80px;
+}
+
+input, textarea, ::placeholder {
+    text-align: center;
+}
+
+textarea {
+    width: 50%;
+}
+
+.table {
+    text-align: center;
+}
+
+.btn-light{
+    color: black;
+    width: 200px;
+    background-color: #D1F5C5;
+    border-radius: 80px;
+    border: solid;
+    border-width: thin;
+}
+
+.btn:hover {
+    background-color: #91B14C;
+}
+
+.button {
+    max-height: 38px;
+    max-width: 38px;
+    margin-left: 20px;
+    border: solid;
+    border-radius: 30px;
+    border-width: thin;
+}

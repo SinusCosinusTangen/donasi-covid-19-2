@@ -62,7 +62,9 @@ INSTALLED_APPS = [
     'main',
     'daftarDonasi',
     'report',
-    'pertanyaan'
+    'testi',
+    'pertanyaan',
+    'donasi',
 ]
 
 MIDDLEWARE = [
@@ -74,6 +76,11 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+]
+
+# password hashers
+PASSWORD_HASHERS = [
+    'django.contrib.auth.hashers.MD5PasswordHasher',
 ]
 
 ROOT_URLCONF = 'ppw_kel_12.urls'
@@ -150,6 +157,10 @@ USE_L10N = True
 USE_TZ = True
 
 
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+MEDIA_URL = '/media/'
+
+
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.1/howto/static-files/
 
@@ -163,6 +174,7 @@ STATIC_ROOT = BASE_DIR / 'staticfiles'
 STATICFILES_DIRS = [
     BASE_DIR / 'static',
     BASE_DIR / 'daftarDonasi/static',
+    BASE_DIR / 'report/static',
 ]
 
 # Make sure the directories exist to prevent errors when doing `collectstatic`.

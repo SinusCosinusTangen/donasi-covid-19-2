@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+{% extends 'base.html' %}
+<html>
+    <head>
+        {% block meta %}
+        <style>
+            h1 {
+                text-align: center;
+            }
+
+            input, textarea {
+                border-radius: 80px;
+            }
+
+            input, textarea, ::placeholder {
+                text-align: center;
+            }
+
+            textarea {
+                width: 50%;
+            }
+
+            .table {
+                text-align: center;
+            }
+        </style>
+        <title>Add Institution</title>
+        {% endblock meta %}
+    </head>
+
+    <body>
+        {% block content %}
+        <h1 style="color: #4B6574; font-weight: bold; ">Register Your Institution</h1>
+        <form method="POST" enctype="multipart/form-data">
+            <table class="table">
+                <tbody>
+                    <tr>
+                        <td>
+                            {{ form.lembaga }}
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            {{ form.description }}
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            {{ form.image }}
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            {% csrf_token %}
+                            <button class="btn btn-light" type="submit" name="Simpan">Submit</button>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <a href="{% url 'donasi:seeInstitution' %}" style="color: black;">See Institutions</button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </form>     
+        {% endblock %}
+    </body>
+</html>
