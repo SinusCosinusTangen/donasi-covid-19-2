@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+    {% extends 'base.html' %}
+    {% load static %}
+    <head>
+        {% block meta %}
+        <title>Donations</title>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script> 
+        <link rel="stylesheet" href="{% static 'userauth/style.css' %}">
+        {% endblock meta %}
+    </head>
+
+    <body>
+        {% block content %}
+        <div class="form-wrap">
+            <div class="tabs">
+                <h3 class="signup-tab"><a class="active" href="#signup-tab-content">Sign Up</a></h3>
+                <h3 class="login-tab"><a href="#login-tab-content">Login</a></h3>
+            </div><!--.tabs-->
+    
+            <div class="tabs-content">
+                <div id="signup-tab-content" class="active">
+                    <form class="signup-form" action="" method="post">
+                        {% csrf_token %}
+              <input type="text" class="input" id="first_name" autocomplete="off" placeholder="First Name">
+              <input type="text" class="input" id="last_name" autocomplete="off" placeholder="Last Name">
+                        <input type="text" class="input" name="username" id="username" autocomplete="off" placeholder="Username">
+                        <input type="password" class="input" name="password1" id="password1" autocomplete="off" placeholder="Password">
+              <input type="password" class="input" name="password2" id="password2" autocomplete="off" placeholder="Confirm Password">
+                        <input type="submit" class="buttons" value="Sign Up" name="Sign Up">
+                    </form><!--.login-form-->
+                </div><!--.signup-tab-content-->
+    
+                <div id="login-tab-content">
+                    <form class="login-form" action="" method="post">
+                        {% csrf_token %}
+                        <input type="text" class="input" id="user_login" name="username" autocomplete="off" placeholder="Username">
+                        <input type="password" class="input" id="user_pass" name="password" autocomplete="off" placeholder="Password">
+                        <input type="submit" class="buttons" value="Login" name="Login">
+                    </form><!--.login-form-->
+                </div><!--.login-tab-content-->
+            </div><!--.tabs-content-->
+        </div><!--.form-wrap-->
+        <!-- <script src="{% static 'userauth/script.js' %}"></script> -->
+        <script>
+            jQuery(document).ready(function($) {
+                tab = $('.tabs h3 a');
+
+                tab.on('click', function(event) {
+                    event.preventDefault();
+                    tab.removeClass('active');
+                    $(this).addClass('active');
+
+                    tab_content = $(this).attr('href');
+                    $('div[id$="tab-content"]').removeClass('active');
+                    $(tab_content).addClass('active');
+                });
+            });
+        </script>
+        {% endblock %}
+
+        <!-- Optional JavaScript -->
+        <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+        <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
+    </body>
+</html>
