@@ -47,6 +47,23 @@
                     <a href="{% url 'report:report'%}">Reports</a>
                 </li>
             </ul>
+            <ul class="navbar-nav mr-auto" style="margin-left: auto; float:right">
+                {% if user.is_authenticated %}
+                <li>
+                    <a style="color: white;"> Halo, {{ user.username}} </a>
+                </li>
+                <li>
+                    <a href="{% url 'userauth:logout'%}">Logout</a>
+                </li>
+                {% else %}
+                <li>
+                    <a href="{% url 'userauth:login'%}">Login</a>
+                </li>
+                {% endif %}
+
+            </ul>
+
+
         </div>
     </div>
     {% block content %} {% endblock content %}

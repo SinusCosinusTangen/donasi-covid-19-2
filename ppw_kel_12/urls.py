@@ -27,6 +27,7 @@ urlpatterns = [
     path('question/', include('pertanyaan.urls')),
     path('testi/', include('testi.urls')),
     path('institution/', include('donasi.urls')),
+    path('userauth/', include('userauth.urls')),
 ]
 
 if settings.DEBUG:

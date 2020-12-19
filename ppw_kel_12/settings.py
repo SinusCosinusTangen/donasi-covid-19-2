@@ -65,6 +65,7 @@ INSTALLED_APPS = [
     'testi',
     'pertanyaan',
     'donasi',
+    'userauth',
 ]
 
 MIDDLEWARE = [
