@@ -3,22 +3,47 @@ from django.urls import resolve
 from .models import Testi
 from .views import testi, tampilan
 from .apps import TestiConfig
+from django.contrib.auth.models import User
 
 class TestRouting(TestCase):
     def test_event_url_is_exist(self):
         response = Client().get('/testi/')
         self.assertEqual(response.status_code, 200)
     def test_event2_url_is_exist(self):
+        user = User.objects.create_user('testing', 'testing@testing.com', 'testing8888') # create user
+        # testing jawab pertanyaan ketika user sudah login
+        self.client.login(username='testing', password='testing8888') # login user
+
         response = Client().get('/testi/atur/')
-        self.assertEqual(response.status_code, 200)
-    
+        self.assertEqual(response.status_code, 302)
+
+        self.client.logout()
+        self.assertEqual(response.status_code, 302)
+
     def test_event_using_template(self):
+        user = User.objects.create_user('testing', 'testing@testing.com', 'testing8888') # create user
+        # testing jawab pertanyaan ketika user sudah login
+        self.client.login(username='testing', password='testing8888') # login user
+
         response = Client().get('/testi/')
+        self.assertContains(response, "What Do")
+
+        self.client.logout()
+        response = Client().get('/testi/')
+        self.assertEqual(response.status_code, 200)
+        #self.assertContains(response, "Time : mm/dd/yyyy")
         self.assertTemplateUsed(response, 'tampilanTesti.html')
     def test_event2_using_template(self):
-        response = Client().get('/testi/atur/')
-        self.assertTemplateUsed(response, 'isiTesti.html')
+        user = User.objects.create_user('testing', 'testing@testing.com', 'testing8888') # create user
+        # testing jawab pertanyaan ketika user sudah login
+        self.client.login(username='testing', password='testing8888') # login user
 
+        response = Client().get('/testi/atur/')
+        #self.assertTemplateUsed(response, 'isiTesti.html')
+
+        self.client.logout()
+        response = Client().get('/userauth/login/')
+        self.assertTemplateUsed(response, 'userauth/userauth.html')
 
 class TestModels(TestCase):
     def test_model_can_create(self):
@@ -37,6 +62,15 @@ class TestFunc(TestCase):
     def test_event_func(self):
         found = resolve('/testi/atur/')
         self.assertEqual(found.func, testi)
+    def test_delete(self):
+        user = User.objects.create_user('testing', 'testing@testing.com', 'testing8888') # create user
+        # testing jawab pertanyaan ketika user sudah login
+        self.client.login(username='testing', password='testing8888') # login user
+
+        testiku = Testi.objects.create(nama="Lary", institusi="Bikiny bottom", testimoni="Tuan Krabs peelit")
+        testiku.delete()
+        self.assertEqual(Testi.objects.all().count(), 0)
+
 
 class TestApp(TestCase):
     def test_app(self):
