@@ -1,6 +1,6 @@
 from django.test import TestCase, Client
 from .models import Question, Answer
-
+from django.contrib.auth.models import User
 # Create your tests here.
 
 class MainTestCase(TestCase) :
@@ -51,9 +51,23 @@ class MainTestCase(TestCase) :
         self.assertIn("There are no question", html_response)
 
     def test_menjawab(self) :
-        Question.objects.create(name='rafi2', question='ini pertanyaan')
+        c = Client()
+        Question.objects.create(name='rafi2', question='ini pertanyaan') # create pertanyaan
+        User.objects.create_user('testing', 'testing@testing.com', 'testing8888') # create user
+
+        # testing jawab pertanyaan ketika user sudah login
+        c.login(username='testing', password='testing8888') # login user
         response = self.client.post('/question/1/', data={'name' : 'Rafi', "answer" : "ini pertanyaan", "addAnswer" : "mauTanya", "addAnswer" : "add" })
         self.assertEqual(Question.objects.get(pk=1).answer.all()[0].answer, "ini pertanyaan")
+
+
+        # testing jawab pertanyaan ketika user sudah logout
+        c.logout()
+        response = self.client.post('/question/1/', data={"addAnswer" : "add" })
+        self.assertEqual(response.status_code, 302)
+
+
+
         
 
 
