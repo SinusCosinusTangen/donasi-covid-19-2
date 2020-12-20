@@ -1,6 +1,6 @@
 from django.shortcuts import render, HttpResponse, redirect
 from .models import Question, Answer
-from .form import AnswerForm
+from .form import AnswerForm, QuestionForm
 from django.contrib.auth.models import User
 
 
@@ -12,8 +12,17 @@ def pertanyaan(request) :
     questions = Question.objects.all()
     search = request.GET.get('search')
 
+    if request.method == "POST" :
+        if request.POST["addQuestion"] == "add" :
+            if request.user.is_authenticated :
+                return redirect("pertanyaan:add")
+            else :
+                return redirect("userauth:login")
+
     if search : 
         questions = Question.objects.filter(question__icontains=search)
+
+    
 
     context = {
         'questions' : questions
@@ -21,8 +30,8 @@ def pertanyaan(request) :
 
     return render(request, 'pertanyaan/pertanyaan.html', context)
 
+
 def detail(request, pk) :
-    #print(form.user)
     form = AnswerForm()
     context= { 
         'form' : form,
@@ -36,7 +45,6 @@ def detail(request, pk) :
 
     if request.method == 'POST' :
         if request.user.is_authenticated:
-            #form = AnswerForm(initial={'user': request.user})
             
             if request.POST.get("addAnswer") == "mauTanya" :
                 context['mauTanya'] = True
@@ -54,3 +62,21 @@ def detail(request, pk) :
 
 
     return render(request, 'pertanyaan/detail.html', context)
+
+
+
+def add(request) :
+    form = QuestionForm()
+    context = {'form' : form}
+    if request.user.is_authenticated :
+        if request.method == "POST" :
+            form = QuestionForm(request.POST)
+            if form.is_valid() :
+                form = form.save(commit=False)
+                form.user = request.user 
+                form.save()
+                return redirect('pertanyaan:pertanyaan')
+
+        return render(request, 'pertanyaan/add.html', context)
+    else :
+        return redirect("userauth:login")

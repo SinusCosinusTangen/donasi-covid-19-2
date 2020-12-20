@@ -11,7 +11,7 @@ class Answer(models.Model) :
         return self.answer
 
 class Question(models.Model) :
-    name = models.CharField(max_length=50)
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
     question = models.TextField(max_length=400)
     detail = models.TextField(max_length=400, blank=True, null=True)
     answer = models.ManyToManyField(Answer, blank=True)

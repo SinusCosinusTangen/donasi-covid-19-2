@@ -14,7 +14,7 @@ class MainTestCase(TestCase) :
     def test_model (self) :
         user = User.objects.create_user('testing', 'testing@testing.com', 'testing8888')
         ans = Answer.objects.create(user=user, answer='ini jawabannya')
-        Question.objects.create(name='rafi2', question='ini pertanyaan')
+        Question.objects.create(user=user, question='ini pertanyaan')
         Question.objects.get(pk=1).answer.add(ans)
 
         self.assertEqual(1, Question.objects.count())
@@ -30,7 +30,7 @@ class MainTestCase(TestCase) :
     def test_element_in_template(self) :
         user = User.objects.create_user('testing', 'testing@testing.com', 'testing8888')
         ans = Answer.objects.create(user=user, answer='ini jawabannya')
-        Question.objects.create(name='rafi2', question='ini pertanyaan')
+        Question.objects.create(user=user, question='ini pertanyaan')
         Question.objects.get(pk=1).answer.add(ans)
 
         response = Client().get("/question/")
@@ -43,7 +43,8 @@ class MainTestCase(TestCase) :
         self.assertIn("ini jawabannya", html_response)
 
     def test_search(self) :
-        Question.objects.create(name='rafi2', question='ini pertanyaan')
+        user = User.objects.create_user('testing', 'testing@testing.com', 'testing8888')
+        Question.objects.create(user=user, question='ini pertanyaan')
         response = self.client.get('/question/', data={'search' : "ini"})
         html_response = response.content.decode('utf8')
         self.assertIn("ini", html_response)
@@ -54,8 +55,8 @@ class MainTestCase(TestCase) :
 
 
     def test_menjawab(self) :
-        Question.objects.create(name='rafi2', question='ini pertanyaan') # create pertanyaan
-        User.objects.create_user('testing', 'testing@testing.com', 'testing8888') # create user
+        user = User.objects.create_user('testing', 'testing@testing.com', 'testing8888') # create user
+        Question.objects.create(user=user, question='ini pertanyaan') # create pertanyaan
 
         # testing jawab pertanyaan ketika user sudah login
         self.client.login(username='testing', password='testing8888') # login user
@@ -70,10 +71,11 @@ class MainTestCase(TestCase) :
 
 
     def test_bertanya(self) :
+        user = User.objects.create_user('testing', 'testing@testing.com', 'testing8888') # create user
         # testing jawab pertanyaan ketika user sudah login
         self.client.login(username='testing', password='testing8888') # login user
-        response = self.client.post('/question/add/', data={"question" : "ini pertanyaan",  "addAnswer" : "add" })
-        self.assertEqual(Question.objects.get(pk=1).question, "ini pertanyaan")
+        response = self.client.post('/question/add/', data={"question" : "ini pertanyaan",  "addQuestion" : "add" })
+        self.assertEqual(Question.objects.get(question='ini pertanyaan').question, "ini pertanyaan")
 
         self.client.logout()
         response = self.client.post('/question/', data={"addQuestion" : "add" })
