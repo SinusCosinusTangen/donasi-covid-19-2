@@ -1,6 +1,9 @@
 from django.shortcuts import render, HttpResponse, redirect
 from .models import Question, Answer
 from .form import AnswerForm
+from django.contrib.auth.models import User
+
+
 
 # Create your views here.
 
@@ -16,11 +19,10 @@ def pertanyaan(request) :
         'questions' : questions
     }
 
-    
-
     return render(request, 'pertanyaan/pertanyaan.html', context)
 
 def detail(request, pk) :
+    #print(form.user)
     form = AnswerForm()
     context= { 
         'form' : form,
@@ -33,14 +35,21 @@ def detail(request, pk) :
         context['question'] = ""
 
     if request.method == 'POST' :
-        if request.POST.get("addAnswer") == "mauTanya" :
-            context['mauTanya'] = True
-        if request.POST.get("addAnswer") == "add": 
-            form = AnswerForm(request.POST)
-            if form.is_valid() :
-                ans = form.save()
-                Question.objects.get(pk = pk).answer.add(ans)
-                return redirect("pertanyaan:detail", pk)
+        if request.user.is_authenticated:
+            #form = AnswerForm(initial={'user': request.user})
+            
+            if request.POST.get("addAnswer") == "mauTanya" :
+                context['mauTanya'] = True
+            if request.POST.get("addAnswer") == "add": 
+                form = AnswerForm(request.POST)
+                if form.is_valid() :
+                    ans = form.save(commit=False)
+                    ans.user = request.user 
+                    ans.save()
+                    Question.objects.get(pk = pk).answer.add(ans)
+                    return redirect("pertanyaan:detail", pk)
+        else :
+            return redirect("userauth:login")
 
 
 

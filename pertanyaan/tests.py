@@ -12,7 +12,8 @@ class MainTestCase(TestCase) :
         self.assertEqual(response3.status_code,200)
 
     def test_model (self) :
-        ans = Answer.objects.create(name='rafi', answer='ini jawabannya')
+        user = User.objects.create_user('testing', 'testing@testing.com', 'testing8888')
+        ans = Answer.objects.create(user=user, answer='ini jawabannya')
         Question.objects.create(name='rafi2', question='ini pertanyaan')
         Question.objects.get(pk=1).answer.add(ans)
 
@@ -27,7 +28,8 @@ class MainTestCase(TestCase) :
         self.assertTemplateUsed(response2,"pertanyaan/detail.html")
     
     def test_element_in_template(self) :
-        ans = Answer.objects.create(name='rafi', answer='ini jawabannya')
+        user = User.objects.create_user('testing', 'testing@testing.com', 'testing8888')
+        ans = Answer.objects.create(user=user, answer='ini jawabannya')
         Question.objects.create(name='rafi2', question='ini pertanyaan')
         Question.objects.get(pk=1).answer.add(ans)
 
@@ -50,19 +52,19 @@ class MainTestCase(TestCase) :
         html_response = response.content.decode('utf8')
         self.assertIn("There are no question", html_response)
 
+
     def test_menjawab(self) :
-        c = Client()
         Question.objects.create(name='rafi2', question='ini pertanyaan') # create pertanyaan
         User.objects.create_user('testing', 'testing@testing.com', 'testing8888') # create user
 
         # testing jawab pertanyaan ketika user sudah login
-        c.login(username='testing', password='testing8888') # login user
-        response = self.client.post('/question/1/', data={'name' : 'Rafi', "answer" : "ini pertanyaan", "addAnswer" : "mauTanya", "addAnswer" : "add" })
+        self.client.login(username='testing', password='testing8888') # login user
+        response = self.client.post('/question/1/', data={"addAnswer" : "mauTanya", "answer" : "ini pertanyaan",  "addAnswer" : "add" })
         self.assertEqual(Question.objects.get(pk=1).answer.all()[0].answer, "ini pertanyaan")
 
 
         # testing jawab pertanyaan ketika user sudah logout
-        c.logout()
+        self.client.logout()
         response = self.client.post('/question/1/', data={"addAnswer" : "add" })
         self.assertEqual(response.status_code, 302)
 
