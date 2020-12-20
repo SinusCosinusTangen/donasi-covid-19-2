@@ -38,7 +38,7 @@
 
             <div class = "row align-items-center">
                 <div class='col-12'>
-                    <p style="font-size: small;">From : {{question.name}}</p>
+                    <p style="font-size: small;">From : {{question.user.username}}</p>
                 </div>
 
             </div>
@@ -54,11 +54,11 @@
             <hr style="color: black; border-top: 1px solid black;">
 
             {% if question.answer.all%}
-
+                
                 {% for i in question.answer.all %}
                 <div class = "row align-items-center">
                     <div class='col-12'>
-                        <p style="font-size: small;">By : {{i.name}}</p>
+                        <p style="font-size: small;">By : {{i.user}}</p>
                         <p style="font-size: larger;">{{i.answer}}</p>
                     </div>
     

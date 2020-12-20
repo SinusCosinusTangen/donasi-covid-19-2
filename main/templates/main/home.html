@@ -33,18 +33,7 @@
           <h1 style="color: #4B6574; font-weight: bold; ">About Us</h1>
           <p>Hello! we are a non-profit student developed website created to make donating easier than ever. Since the covid-19 has emerged, people around the world has been struggling, especially financially. Our purpose is to make it easier for people willing to help to donate safely and efficiently. We hope to be on your service, and thank you for all the support.          </p>
       </div>
-      <div class='col col-5'>
-        <form action="" method="post">
-          <h1 style="color: #4B6574; font-weight: bold; ">Question?</h1>
-          {%csrf_token%}
-          {{form | crispy}}
-          <button type="submit" class="btn btn-light" name='ask' value="ask">Ask</button>
-          <a href="{%url 'pertanyaan:pertanyaan' %}" style=""> See All </a>
-        </form>
 
-        
-        
-      </div>
   </div>
   <br>
 </div>
