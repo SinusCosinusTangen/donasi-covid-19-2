@@ -69,6 +69,17 @@ class MainTestCase(TestCase) :
         self.assertEqual(response.status_code, 302)
 
 
+    def test_bertanya(self) :
+        # testing jawab pertanyaan ketika user sudah login
+        self.client.login(username='testing', password='testing8888') # login user
+        response = self.client.post('/question/add/', data={"question" : "ini pertanyaan",  "addAnswer" : "add" })
+        self.assertEqual(Question.objects.get(pk=1).question, "ini pertanyaan")
+
+        self.client.logout()
+        response = self.client.post('/question/', data={"addQuestion" : "add" })
+        self.assertEqual(response.status_code, 302)
+
+
 
         
 
