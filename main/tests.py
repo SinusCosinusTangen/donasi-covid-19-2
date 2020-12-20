@@ -35,9 +35,6 @@ class MainTestCase(TestCase):
         response = self.client.get(reverse('main:donate'))
         self.assertEqual(response.status_code, 200)
 
-    def test_bertanya(self) :
-        response = self.client.post('/', data={'name' : 'Rafi', "question" : "test", "ask" : "ask" })
-        self.assertEqual(Question.objects.count(), 1)
 
 
 class MainFunctionalTestCase(FunctionalTestCase):

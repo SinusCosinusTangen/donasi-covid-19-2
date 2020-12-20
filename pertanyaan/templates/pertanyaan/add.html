@@ -1,0 +1,33 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load crispy_forms_tags %}
+
+{% block meta %}
+    <title>Ask Question</title>
+    <style>
+        .btn-block {
+            background-color: #D1F5C5
+        }
+    </style>
+
+
+{% endblock meta %}
+
+{% block content %}
+    <div class=container>
+        <div class="row justify-content-center">
+            <div class='col-12' style='margin-top:5%'>
+                <h1 style="color: #4B6574; font-weight: bold; ">Question?</h1>
+            </div>
+            <div class=col style="margin : 5%">
+                <form method = "POST">
+                    {% csrf_token %}
+                    {{form|crispy}}
+                    
+                    <button type="submit" class="btn btn-outline-secondary btn-block" type="button" name="addQuestion" value="add">Ask</button>
+                </form>
+
+            </div>
+        </div>
+    </div>
+{% endblock content %}

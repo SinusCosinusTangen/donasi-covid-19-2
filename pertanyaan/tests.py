@@ -1,6 +1,6 @@
 from django.test import TestCase, Client
 from .models import Question, Answer
-
+from django.contrib.auth.models import User
 # Create your tests here.
 
 class MainTestCase(TestCase) :
@@ -12,8 +12,9 @@ class MainTestCase(TestCase) :
         self.assertEqual(response3.status_code,200)
 
     def test_model (self) :
-        ans = Answer.objects.create(name='rafi', answer='ini jawabannya')
-        Question.objects.create(name='rafi2', question='ini pertanyaan')
+        user = User.objects.create_user('testing', 'testing@testing.com', 'testing8888')
+        ans = Answer.objects.create(user=user, answer='ini jawabannya')
+        Question.objects.create(user=user, question='ini pertanyaan')
         Question.objects.get(pk=1).answer.add(ans)
 
         self.assertEqual(1, Question.objects.count())
@@ -27,8 +28,9 @@ class MainTestCase(TestCase) :
         self.assertTemplateUsed(response2,"pertanyaan/detail.html")
     
     def test_element_in_template(self) :
-        ans = Answer.objects.create(name='rafi', answer='ini jawabannya')
-        Question.objects.create(name='rafi2', question='ini pertanyaan')
+        user = User.objects.create_user('testing', 'testing@testing.com', 'testing8888')
+        ans = Answer.objects.create(user=user, answer='ini jawabannya')
+        Question.objects.create(user=user, question='ini pertanyaan')
         Question.objects.get(pk=1).answer.add(ans)
 
         response = Client().get("/question/")
@@ -41,7 +43,8 @@ class MainTestCase(TestCase) :
         self.assertIn("ini jawabannya", html_response)
 
     def test_search(self) :
-        Question.objects.create(name='rafi2', question='ini pertanyaan')
+        user = User.objects.create_user('testing', 'testing@testing.com', 'testing8888')
+        Question.objects.create(user=user, question='ini pertanyaan')
         response = self.client.get('/question/', data={'search' : "ini"})
         html_response = response.content.decode('utf8')
         self.assertIn("ini", html_response)
@@ -50,10 +53,36 @@ class MainTestCase(TestCase) :
         html_response = response.content.decode('utf8')
         self.assertIn("There are no question", html_response)
 
+
     def test_menjawab(self) :
-        Question.objects.create(name='rafi2', question='ini pertanyaan')
-        response = self.client.post('/question/1/', data={'name' : 'Rafi', "answer" : "ini pertanyaan", "addAnswer" : "mauTanya", "addAnswer" : "add" })
+        user = User.objects.create_user('testing', 'testing@testing.com', 'testing8888') # create user
+        Question.objects.create(user=user, question='ini pertanyaan') # create pertanyaan
+
+        # testing jawab pertanyaan ketika user sudah login
+        self.client.login(username='testing', password='testing8888') # login user
+        response = self.client.post('/question/1/', data={"addAnswer" : "mauTanya", "answer" : "ini pertanyaan",  "addAnswer" : "add" })
         self.assertEqual(Question.objects.get(pk=1).answer.all()[0].answer, "ini pertanyaan")
+
+
+        # testing jawab pertanyaan ketika user sudah logout
+        self.client.logout()
+        response = self.client.post('/question/1/', data={"addAnswer" : "add" })
+        self.assertEqual(response.status_code, 302)
+
+
+    def test_bertanya(self) :
+        user = User.objects.create_user('testing', 'testing@testing.com', 'testing8888') # create user
+        # testing jawab pertanyaan ketika user sudah login
+        self.client.login(username='testing', password='testing8888') # login user
+        response = self.client.post('/question/add/', data={"question" : "ini pertanyaan",  "addQuestion" : "add" })
+        self.assertEqual(Question.objects.get(question='ini pertanyaan').question, "ini pertanyaan")
+
+        self.client.logout()
+        response = self.client.post('/question/', data={"addQuestion" : "add" })
+        self.assertEqual(response.status_code, 302)
+
+
+
         
 
 
