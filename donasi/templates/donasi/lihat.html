@@ -16,7 +16,7 @@
             width: 10%;
         }
     </style>
-    <title>Our Institution</title>
+    <title>Our Partner Institution</title>
     {% endblock meta %}
     </head>
 
@@ -26,6 +26,9 @@
             <div class="row justify-content-between">
                 <div class="col-5 align-self-start" style="margin-top:10%">
                     <h1 style="color: #4B6574; font-weight: bold; ">Our Partner<br>Intitutions</h1>
+                    {% if user.is_authenticated %}
+                    <a href="{% url 'donasi:institution' %}" style="color: black;">Register Institutions</a>
+                    {% endif %}
                 </div>
 
                 <div class="table-wrapper-scroll-y my-custom-scrollbar" style="width: 55%;">

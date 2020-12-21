@@ -4,13 +4,16 @@ from .models import Donasi
 
 # Create your views here.
 def institutionReg(request):
-    form = FormLembaga()
-    context = {'form':form}
-    if request.method == "POST": 
-        form = FormLembaga(request.POST, request.FILES)
-        if form.is_valid(): 
-            form.save()
-        return redirect('/institution')
+    if request.user.is_authenticated:
+        form = FormLembaga()
+        context = {'form':form}
+        if request.method == "POST": 
+            form = FormLembaga(request.POST, request.FILES)
+            if form.is_valid(): 
+                form.save()
+                return redirect("donasi:institution")
+    else :
+        return redirect("userauth:login")
 
     return render(request, 'donasi/donasi.html', context)
 
