@@ -11,6 +11,7 @@
 
     <body>
         {% block content %}
+        {% if user.is_authenticated %}
         <h1 style="color: #4B6574; font-weight: bold; ">Report Problems</h1>
         <form action="" method="POST">
             <table class="table">
@@ -32,6 +33,17 @@
                         </td>
                     </tr>
                 </tbody>
+                {% else %}
+                <br>
+
+        <br>
+        <h1 style="color: #4B6574; font-weight: bold; margin-left: 30px ">Login to <br> Report...</h1>
+        <br>
+        <div class="container mx-auto">
+            <a style="margin-bottom: 30px; margin-left: 30px" href="{% url 'userauth:login'%}" class="btn btn-light">Login Now</a>
+        </div>
+        {% endif %}
+
             </table>
         </form>
         {% endblock %}
