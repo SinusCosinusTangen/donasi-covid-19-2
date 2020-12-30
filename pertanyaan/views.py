@@ -5,12 +5,15 @@ from django.contrib.auth.models import User
 
 
 
+
 # Create your views here.
 
 
 def pertanyaan(request) :
     questions = Question.objects.all()
     search = request.GET.get('search')
+    
+    
 
     if request.method == "POST" :
         if request.POST["addQuestion"] == "add" :
@@ -19,7 +22,7 @@ def pertanyaan(request) :
             else :
                 return redirect("userauth:login")
 
-    if search : 
+    if search :
         questions = Question.objects.filter(question__icontains=search)
 
     
@@ -80,3 +83,5 @@ def add(request) :
         return render(request, 'pertanyaan/add.html', context)
     else :
         return redirect("userauth:login")
+
+
