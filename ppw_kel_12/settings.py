@@ -66,6 +66,7 @@ INSTALLED_APPS = [
     'pertanyaan',
     'donasi',
     'userauth',
+    'rest_framework'
 ]
 
 MIDDLEWARE = [
