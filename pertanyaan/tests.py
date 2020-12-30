@@ -11,9 +11,9 @@ class MainTestCase(TestCase) :
         response3  = Client().get("/question/1/")
         self.assertEqual(response3.status_code,200)
 
-        response = Client().get("/question/all/")
+        response = Client().get("/question/all?q=")
         self.assertEqual(response.status_code, 200)
-        
+
 
     def test_model (self) :
         user = User.objects.create_user('testing', 'testing@testing.com', 'testing8888')

@@ -3,6 +3,10 @@ from .models import Question, Answer
 from .form import AnswerForm, QuestionForm
 from django.contrib.auth.models import User
 
+from django.http import HttpResponse, JsonResponse
+from django.views.decorators.csrf import csrf_exempt
+from rest_framework.parsers import JSONParser
+from .serializers import QuestionSerializer
 
 
 
@@ -85,3 +89,14 @@ def add(request) :
         return redirect("userauth:login")
 
 
+@csrf_exempt
+def question_list(request) :
+    try :
+        arugment = request.GET['q']
+    except :
+        arugment = ""
+
+    if request.method == "GET" :
+        question = Question.objects.filter(question__icontains=arugment)
+        serializer = QuestionSerializer(question, many=True)
+        return JsonResponse(serializer.data, safe=False)

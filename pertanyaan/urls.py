@@ -8,4 +8,5 @@ urlpatterns = [
     path('', views.pertanyaan, name='pertanyaan'),
     path('<int:pk>/', views.detail, name='detail'),
     path("add/", views.add, name="add" ),
+    path('all', views.question_list, name="list-pertanyaan")
 ]
