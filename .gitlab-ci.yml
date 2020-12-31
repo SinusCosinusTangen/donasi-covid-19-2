@@ -71,7 +71,7 @@ Deployment:
   script:
     - dpl --provider=heroku --app=$HEROKU_APP_NAME --api-key=$HEROKU_API_KEY
     - heroku run --app $HEROKU_APP_NAME migrate
-    - echo "from django.contrib.auth.models import User; User.objects.create_superuser('admin_james', 'admin@example.com', 'pass2222')" | heroku run --app $HEROKU_APPNAME python manage.py shell
+    #- echo "from django.contrib.auth.models import User; User.objects.create_superuser('admin_james', 'admin@example.com', 'pass2222')" | heroku run --app $HEROKU_APPNAME python manage.py shell
   environment:
     name: production
     url: https://$HEROKU_APP_NAME.herokuapp.com
