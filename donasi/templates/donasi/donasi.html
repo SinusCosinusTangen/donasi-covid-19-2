@@ -52,7 +52,7 @@
                     <tr>
                         <td>
                             {% csrf_token %}
-                            <button class="btn btn-light" type="submit" name="Simpan">Submit</button>
+                            <button class="btn btn-light" type="submit" name="Simpan" id="simpan">Submit</button>
                         </td>
                     </tr>
                     <tr>
@@ -62,7 +62,14 @@
                     </tr>
                 </tbody>
             </table>
-        </form>     
+        </form>    
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+        <script type="text/javascript">
+            $("#simpan").click(function() {
+                alert("Institusi tersebut berhasil ditambahkan!");
+                console.log("Berhasil");
+            });
+        </script> 
         {% endblock %}
     </body>
 </html>

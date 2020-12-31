@@ -11,6 +11,9 @@ def institutionReg(request):
             form = FormLembaga(request.POST, request.FILES)
             if form.is_valid(): 
                 form.save()
+                text = "Institusi berhasil ditambahkan"
+                context = {'text':text}
+                # return render(request, "donasi/lihat.html", context)
                 return redirect("donasi:institution")
     else :
         return redirect("userauth:login")
