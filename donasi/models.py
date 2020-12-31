@@ -4,4 +4,4 @@ from django.db import models
 class Donasi(models.Model):
     lembaga = models.CharField(max_length=100, null=True)
     description = models.CharField(max_length=500, null=True)
-    image = models.ImageField(upload_to="media/img/", default="default.png", blank=True)
+    image = models.ImageField(upload_to="img")
