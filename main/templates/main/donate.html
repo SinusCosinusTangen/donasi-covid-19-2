@@ -3,6 +3,8 @@
 
 {% block meta %}
 <title>Donate</title>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script> 
+<link rel="stylesheet" href="{% static 'donate/styles.css' %}">
 {% endblock meta %}
 
 {% block content %}
@@ -56,15 +58,50 @@
         <h1 style="color: #4B6574; font-weight: bold; margin-left: 30px ">Login to <br> Donate Now...</h1>
         <br>
         <div class="container mx-auto">
-            <a style="margin-bottom: 30px; margin-left: 30px" href="{% url 'userauth:login'%}" class="btn btn-light">Login Now</a>
+            <a style="margin-bottom: 30px; margin-left: 30px" href="{% url 'userauth:login'%}" class="btn btn-light">Login Now </a>
         </div>
+        <div class="pups pu1">
+			<h1>Pop Up One</h1>
+			<p>Blah blah blah</p>
+			<p><a href="#" class="closePopUp">close</a></p>
+		</div>
         {% endif %}
       </div>
-      <div class="col-5 align-self-start" style="margin-top:15% ; margin-right:2%">
-        <h3 style="color: #4B6574; font-weight: bold; ">How to Donate</h3>
-        <p> To donate through our website, simply fill in your identity in the forms available. Fill in the amount of money that you want to donate and choose your prefered payment method. Lastly, you can leave a personal message for those who are going to receive your donation. Click <b>Donate</b> and your donation has been recorded.         </p>
-      </div>
+      <div class="col-5 align-self-start" style="margin-top:3% ; margin-right:2%">
+       <div class="accordion">
+            <div class="accordion__item">
+              <h3 class="accordion__title js-title">How to Donate</h3>
+              <p class="accordion__copy accordion__copy--open js-copy">You will need to <b>login</b> first to make a donation. To donate through our website, simply fill in your identity in the forms available. Fill in the amount of money that you want to donate and choose your prefered payment method. Lastly, you can leave a personal message for those who are going to receive your donation. Click <b>Donate</b> and your donation has been recorded.</p>
+            </div>
+            
+            <div class="accordion__item">
+              <h3 class="accordion__title js-title">How to Give Testimonies</h3>
+              <p class="accordion__copy js-copy">You will need to <b>login</b> first to make a donation. To submit a testimony, go to the <b>Testimonies</b> on the navbar, click <b>"Give Us Testimonies"</b>, and fill in the forms available. To submit, you will have to click <b>Submit</b>.</p>
+            </div>
+            
+            <div class="accordion__item">
+              <h3 class="accordion__title js-title">How to Ask Questions</h3>
+              <p class="accordion__copy js-copy">You will need to <b>login</b> first to ask a question. To ask a question, go to the <b>Questions</b> on the navbar, click <b>"Ask"</b>, and fill in the box to ask the question. To submit, you will have to click <b>Ask</b>.</p>
+            </div>
+            
+            <div class="accordion__item">
+              <h3 class="accordion__title js-title">How to Register an Institution</h3>
+              <p class="accordion__copy js-copy">You will need to <b>login</b> first to register an Institution. To register an Institution, go to the <b>Institution</b> on the navbar, click <b>"Register Institutions"</b>, and fill in the box to ask the question. To submit, you will have to click <b>Submit</b>.</p>
+            </div>
+            
+            <div class="accordion__item">
+              <h3 class="accordion__title js-title">How to Report a Problem</h3>
+              <p class="accordion__copy js-copy">You will need to <b>login</b> first to report a Problem. To report a problem, go to the <b>Report</b> on the navbar, click <b>"Reports"</b>, and fill in the box to ask the question. To submit, you will have to click <b>Submit</b>.</p>
+            </div>
+          </div>
+          
+          <img class="pict" src="{% static 'img/1.png' %}">
+
+         
   </div>
   <br>
+  <script src="{% static 'donate/script.js' %}"></script>
+  
+  
 </div>
 {% endblock content %}
