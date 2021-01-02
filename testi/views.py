@@ -35,10 +35,26 @@ def delete(request, delete_id):
     Testi.objects.filter(id = delete_id).delete()
     return redirect('testi:tampilan')
 
-
+def searchh(request):
+    testi = Testi.objects.all()
+    context = {
+        'semua_testi':testi
+    }
+    return render(request, 'testimonee.html', context)
  
 
 
+@csrf_exempt
+def name_list(request) :
+    try :
+        arguments = request.GET['q']
+    except :
+        arguments = ""
+
+    if request.method == "GET" :
+        institusi = Testi.objects.filter(institusi__icontains=arguments)
+        serializer = TestiSerializer(institusi, many=True)
+        return JsonResponse(serializer.data, safe=False)
 
 
 
