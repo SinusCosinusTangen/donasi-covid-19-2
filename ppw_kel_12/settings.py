@@ -176,6 +176,7 @@ STATICFILES_DIRS = [
     BASE_DIR / 'static',
     BASE_DIR / 'daftarDonasi/static',
     BASE_DIR / 'report/static',
+    BASE_DIR / 'testi/static',
 ]
 
 # Make sure the directories exist to prevent errors when doing `collectstatic`.

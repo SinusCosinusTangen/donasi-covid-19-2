@@ -52,7 +52,7 @@
                     <tr>
                         <td>
                             {% csrf_token %}
-                            <button class="btn btn-light" type="submit" name="Simpan" id="simpan">Submit</button>
+                            <input class="btn btn-light" type="submit" name="Simpan" id="simpan"></input>
                         </td>
                     </tr>
                     <tr>
@@ -64,10 +64,13 @@
             </table>
         </form>    
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js" integrity="sha384-ygbV9kiqUc6oa4msXn9868pTtWMgiQaeYH7/t7LECLbyPA2x65Kgf80OJFdroafW" crossorigin="anonymous"></script>
+
         <script type="text/javascript">
-            $("#simpan").click(function() {
+            $("form").on("submit", function() {
                 alert("Institusi tersebut berhasil ditambahkan!");
                 console.log("Berhasil");
+                return true;
             });
         </script> 
         {% endblock %}
