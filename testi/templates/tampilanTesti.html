@@ -1,4 +1,4 @@
- {% extends 'base.html' %} {% block content%}
+ {% extends 'base.html' %} {% block content%}{% load static %}
 <!DOCTYPE html>
 <html>
 
@@ -76,64 +76,205 @@
         a {
             text-decoration: none;
         }
+        
+        .sapaan {
+            text-align: center;
+            padding-top: 2rem;
+            padding-bottom: 1rem;
+        }
+        
+        .isi-page {
+            margin: 2rem;
+            margin-bottom: 0;
+        }
+        
+        .row {
+            margin: 0;
+        }
+        
+        .text-muted {
+            margin-left: 2rem;
+        }
+        
+        .accordion {
+            background-color: #eee;
+            color: #444;
+            cursor: pointer;
+            padding: 18px;
+            width: 100%;
+            border: none;
+            text-align: left;
+            outline: none;
+            font-size: 15px;
+            transition: 0.4s;
+        }
+        
+        .active,
+        .accordion:hover {
+            background-color: #ccc;
+        }
+        
+        .accordion:after {
+            content: '\002B';
+            color: #777;
+            font-weight: bold;
+            float: right;
+            margin-left: 5px;
+        }
+        
+        .active:after {
+            content: "\2212";
+        }
+        
+        .panel {
+            padding: 0 18px;
+            background-color: white;
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.2s ease-out;
+        }
+        
+        body {
+            background-color: white;
+            color: black;
+        }
+        
+        #acr1 {
+            order: 1;
+        }
+        
+        #acr2 {
+            order: 2;
+        }
+        
+        #acr3 {
+            order: 3;
+        }
+        
+        #acr4 {
+            order: 4;
+        }
     </style>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.5.1.js" integrity="sha256-QWo7LDvxbWT2tbbQ97B53yJnYU3WhH/C8ycbRAkjPDc=" crossorigin="anonymous"></script>
+    <script>
+        $(function() {
+
+            console.log($(window))
+            $(".search-box").keyup(function() {
+                var element = $(".search-box").val()
+
+                $.ajax({
+                    url: '/testi/all?q=' + element,
+                    success: function(e) {
+                        $(".content").empty();
+
+                        if (e.length != 0) {
+                            for (i = 0; i < e.length; i++) {
+                                $(".content").append(`
+                        <div class="row align-items-center">
+                            <p>` + e[i].nama + `</p><br>
+                            
+                        </div>
+                        <hr style="margin-left: 5%; margin-right: 5%; margin-top: 0;">
+                        `)
+                            }
+                        } else {
+                            $(".content").append(`
+                    <div class="row align-items-center justify-content-center" style="margin: 5%;">
+                        <h1>There are no testimoni</h1>
+                    </div>
+                    `)
+                        }
+                    }
+                })
+            })
+        });
+    </script>
+    <script src="{% static 'main.js' %}"></script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
 </head>
 
-<body>
+<body style="background-color: #e4f5e2;">
     <div class="Container">
         <div class="Content">
             <div class="Wrapper">
                 <div class="LeftContent" style="padding-left: 10%;padding-top: 5%;">
                     <b><h1 style="color: #4B6574; font-weight: bold; ">
                         What Do<br>People Say<br>About Us?
-                    </h1></b>
-                    <a style="margin-bottom: 30px;" href="{% url 'testi:testi' %}" class="btn btn-light">Give Us Testimoni</a>
+                    </h1></b> {% if user.is_authenticated %}
+                    <a style="margin-bottom: 30px;" href="{% url 'testi:testi' %}" class="btn btn-light">Give Us Testimoni</a> {%else%}
+                    <p style="color: red;">*login required</p>
+                    <a style="margin-bottom: 30px;" href="{% url 'userauth:login' %}" class="btn btn-light">Give Us Testimoni</a> {%endif%}
                 </div>
                 <div class="RightContent" style="padding-top: 2.5%;padding-right: 2.5%; ">
-                    {% for itu in semua_testi %}
-                    <div class="card" style="width: 100%; margin-bottom: 10px;">
-                        <div class="card-header" style="width: 100%;">
-                            <div style="width: 100%;">
-                                {% if user.is_authenticated %}
-                                <a href="{% url 'testi:delete' itu.id %}" data-toggle="tooltip" data-placement="top" title="" data-original-title="Hapus">
-                                    <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-trash-fill" fill="red" xmlns="http://www.w3.org/2000/svg">
-                                        <path fill-rule="evenodd" d="M2.5 1a1 1 0 0 0-1 1v1a1 1 0 0 0 1 1H3v9a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V4h.5a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H10a1 1 0 0 0-1-1H7a1 1 0 0 0-1 1H2.5zm3 4a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 .5-.5zM8 5a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7A.5.5 0 0 1 8 5zm3 .5a.5.5 0 0 0-1 0v7a.5.5 0 0 0 1 0v-7z"></path>
-                                    </svg>
-                                </a>
-                                <h3>
-                                    <center><b>{{itu.nama}}</b>, <u>{{itu.institusi}}</u></center>
-                                </h3>
+                    {% if user.is_authenticated %}
+                    <a style="margin-bottom: 30px;" href="{% url 'testi:searchh' %}" class="btn btn-light">Click here to search </a> {%else%}
+                    <p style="color: red;">*login required</p>
+                    <a style="margin-bottom: 30px;" href="{% url 'userauth:login' %}" class="btn btn-light">Click here to search </a> {%endif%} {% if user.is_authenticated %}
+                    <p>(Click to detail)</p>
+                    <div class=content>
+                        {% for itu in semua_testi %}
+                        <div class="isi-page">
+                            <div class="element">
+                                <button class="accordion" id="acr1">
+                            <h3>
+                                <center><b>{{itu.nama}}</b>, <u>{{itu.institusi}}</u></center>
+                            </h3></button>
+                                <div class="panel" id="tab1">
+                                    <dl class="row card-body">
+                                        <center>
+                                            <p>{{itu.testimoni}}</p>
+                                        </center><br><br><br>
+                                        <p style="text-align: right;">{{itu.tanggal_testi}}</p>
+
+                                        <a href="{% url 'testi:delete' itu.id %}" data-toggle="tooltip" data-placement="top" title="" data-original-title="Hapus">
+                                            <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-trash-fill" fill="red" xmlns="http://www.w3.org/2000/svg">
+                                                <path fill-rule="evenodd" d="M2.5 1a1 1 0 0 0-1 1v1a1 1 0 0 0 1 1H3v9a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V4h.5a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H10a1 1 0 0 0-1-1H7a1 1 0 0 0-1 1H2.5zm3 4a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 .5-.5zM8 5a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7A.5.5 0 0 1 8 5zm3 .5a.5.5 0 0 0-1 0v7a.5.5 0 0 0 1 0v-7z"></path>
+                                            </svg>
+                                        </a>
+                                    </dl>
+                                </div>
                             </div>
                         </div>
-                        <ul class="list-group list-group-flush">
-                            <li class="list-group-item">
-                                <center>
-                                    <p>{{itu.testimoni}}</p>
-                                </center>
-                                <p style="text-align: right;">{{itu.tanggal_testi}}</p>
-                            </li>
-                            {%else%}
-                            <h3>
-                                <center><b>****</b>, <u>{{itu.institusi}}</u></center>
-                            </h3>
+                        {% endfor %}
                     </div>
-                </div>
-                <ul class="list-group list-group-flush">
-                    <li class="list-group-item">
-                        <center>
-                            <p>{{itu.testimoni}}</p>
-                        </center>
-                        <p style="text-align: right;">Time : mm/dd/yyyy</p>
-                    </li>
+                    {%else%}
+                    <p style="color: red;">*login to see full testimoni</p>
+                    <div class=content>
+                        {% for itu in semua_testi %}
+                        <div class="isi-page">
+                            <div class="element">
+                                <button class="accordion" id="acr1">
+                            <h3>
+                                <center><b>***</b>, <u>{{itu.institusi}}</u></center>
+                            </h3></button>
+                                <div class="panel" id="tab1">
+                                    <dl class="row card-body">
+                                        <center>
+                                            <p style="text-align: center; ">{{itu.testimoni}}</p>
+                                        </center><br><br><br>
+                                        <p style="text-align: right;"><br><br><br>time:????</p>
+                                    </dl>
+                                </div>
+                            </div>
+                        </div>
+                        {% endfor %}
+                    </div>
                     {%endif%}
-                </ul>
+                </div>
             </div>
-            {% endfor %}
         </div>
     </div>
-    </div>
-    </div>
+
+
     <div class="Footer"><br><br></div>
+
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+
+
 </body>
 
 </html>

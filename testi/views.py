@@ -1,6 +1,12 @@
 from django.shortcuts import render, redirect
 from .forms import Testimoni_Form
 from .models import Testi
+from django.contrib.auth.models import User
+
+from django.http import HttpResponse, JsonResponse
+from django.views.decorators.csrf import csrf_exempt
+from rest_framework.parsers import JSONParser
+from .serializers import TestiSerializer
 
 def tampilan(request):
     testi = Testi.objects.all()
@@ -30,5 +36,12 @@ def delete(request, delete_id):
     return redirect('testi:tampilan')
 
 
+ 
 
 
+
+
+
+
+
+ 
