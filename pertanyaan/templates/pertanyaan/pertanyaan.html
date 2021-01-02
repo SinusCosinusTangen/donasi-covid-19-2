@@ -29,6 +29,10 @@
         }
 
     </style>
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.21/jquery-ui.min.js"></script>
+    
+    <script src="{% static 'pertanyaan/scripts.js' %}"></script> 
 
 {% endblock meta %}
 
@@ -44,32 +48,30 @@
                     
                 
                 <div class="input-group col-md-3">
-                    <form action="" method="get">
-                        <span class="input-group-append">
-                        <input class="form-control py-2" type="search" placeholder="Search..." id="example-search-input" name="search">
-                        
-                            <button type="submit" class="btn btn-outline-secondary" type="button" name=search>Search </button>
-                        </span>
-
-                    </form>
+                    <span class="input-group-append">
+                    <input class="search-box form-control py-2" type="search" placeholder="Search..." id="example-search-input" name="search">
+                    </span>
                 </div>
               
             </div>
 
-            {% if questions %}
-                {% for i in questions %}
-                    <div class="row align-items-center">
-                        <a href="{% url 'pertanyaan:detail' i.pk %}" style="">{{i.question}}</a>
-                        
-                    </div>
-                    <hr style="margin-left: 5%; margin-right: 5%; margin-top: 0;">
-                {% endfor %}
+            <div class=content>
+                {% if questions %}
+                    {% for i in questions %}
+                        <div class="row align-items-center">
+                            <a href="{% url 'pertanyaan:detail' i.pk %}" style="">{{i.question}}</a>
+                            
+                        </div>
+                        <hr style="margin-left: 5%; margin-right: 5%; margin-top: 0;">
+                    {% endfor %}
             
-            {% else %}
-                <div class="row align-items-center justify-content-center" style="margin: 5%;">
-                    <h1>There are no question</h1>
-                </div>
-            {% endif %}
+                {% else %}
+                    <div class="row align-items-center justify-content-center" style="margin: 5%;">
+                        <h1>There are no question</h1>
+                    </div>
+                {% endif %}
+            </div>
+            
 
 
 

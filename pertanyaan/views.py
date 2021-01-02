@@ -3,6 +3,11 @@ from .models import Question, Answer
 from .form import AnswerForm, QuestionForm
 from django.contrib.auth.models import User
 
+from django.http import HttpResponse, JsonResponse
+from django.views.decorators.csrf import csrf_exempt
+from rest_framework.parsers import JSONParser
+from .serializers import QuestionSerializer
+
 
 
 # Create your views here.
@@ -11,6 +16,8 @@ from django.contrib.auth.models import User
 def pertanyaan(request) :
     questions = Question.objects.all()
     search = request.GET.get('search')
+    
+    
 
     if request.method == "POST" :
         if request.POST["addQuestion"] == "add" :
@@ -19,7 +26,7 @@ def pertanyaan(request) :
             else :
                 return redirect("userauth:login")
 
-    if search : 
+    if search :
         questions = Question.objects.filter(question__icontains=search)
 
     
@@ -80,3 +87,16 @@ def add(request) :
         return render(request, 'pertanyaan/add.html', context)
     else :
         return redirect("userauth:login")
+
+
+@csrf_exempt
+def question_list(request) :
+    try :
+        arugment = request.GET['q']
+    except :
+        arugment = ""
+
+    if request.method == "GET" :
+        question = Question.objects.filter(question__icontains=arugment)
+        serializer = QuestionSerializer(question, many=True)
+        return JsonResponse(serializer.data, safe=False)
