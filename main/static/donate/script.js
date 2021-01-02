@@ -9,7 +9,7 @@ $title.click(function () {
 
 $(document).ready(function(){
     $(".pict").mouseenter(function(){
-      $(this).css("width", 155);
+      $(this).css("width", 120);
     });
     $(".pict").mouseleave(function(){
       $(this).css("width", 105);
